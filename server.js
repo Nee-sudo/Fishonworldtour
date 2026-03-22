@@ -5,9 +5,8 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
 
-
 // Middleware to serve static files from the public folder
-app.use(express.static(path.join(__dirname, "fish-jouney")));
+app.use(express.static(path.join(__dirname, "fish-journey")));
 
 // Set view engine to EJS
 app.set("view engine", "ejs");
@@ -21,7 +20,6 @@ app.use(cors({
     credentials: true
 }));
 
-
 // Middleware to parse JSON bodies
 app.use(express.json());
 
@@ -31,15 +29,12 @@ mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true }
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("Failed to connect to MongoDB", err));
 
-
-
 // Import routes (ensure each route file exports a router)
 const homeRoute = require("./routes/home");
 const goalRoute = require("./routes/goal");
 const dreamRoute = require("./routes/dream");
 const aboutRoute = require("./routes/about");
 const trackRoutes = require("./routes/track");
-
 
 // Use routes
 app.use("/", homeRoute);
