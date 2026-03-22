@@ -7,7 +7,7 @@ const cors = require("cors");
 
 
 // Middleware to serve static files from the public folder
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "fish-jouney")));
 
 // Set view engine to EJS
 app.set("view engine", "ejs");
