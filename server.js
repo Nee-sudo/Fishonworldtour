@@ -6,7 +6,7 @@ require("dotenv").config();
 const cors = require("cors");
 
 // Middleware to serve static files from the public folder
-app.use(express.static(path.join(__dirname, "fish-journey")));
+app.use(express.static(path.join(__dirname, "fish-journey/public")));
 
 // Set view engine to EJS
 app.set("view engine", "ejs");
