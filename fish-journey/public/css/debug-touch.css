@@ -1,0 +1,60 @@
+/* DEBUG TOUCH UTILITY - Toggle in devtools/console */
+
+/* Visual touch overlay - Mobile only */
+@media (max-width: 768px) {
+  .debug-touch * {
+    outline: 1px solid rgba(255, 0, 0, 0.4) !important;
+  }
+  
+  .debug-touch button, .debug-touch input, .debug-touch textarea, .debug-touch select, .debug-touch a, .debug-touch [role="button"] {
+    outline: 2px solid orange !important;
+    background: rgba(255, 165, 0, 0.2) !important;
+  }
+  
+  .debug-touch .map-container, .debug-touch .leaflet-container {
+    outline: 3px solid limegreen !important;
+    background: rgba(0, 255, 0, 0.1) !important;
+  }
+  
+  .debug-touch .scrollable {
+    outline: 2px dashed blue !important;
+    background: rgba(0, 0, 255, 0.05) !important;
+  }
+  
+  .debug-touch nav {
+    outline: 2px solid purple !important;
+  }
+}
+
+/* Toggle button */
+.debug-toggle {
+  position: fixed !important;
+  top: 10px !important;
+  right: 10px !important;
+  z-index: 99999 !important;
+  background: #ef4444 !important;
+  color: white !important;
+  border: none !important;
+  padding: 8px 12px !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important;
+}
+
+.debug-toggle:hover {
+  background: #dc2626 !important;
+}
+
+/* JS Debug Instructions - Paste these in browser console */
+/*
+document.body.classList.add('debug-touch');
+document.body.classList.remove('debug-touch');
+
+STEP 8: Run this at any point:
+console.log("Elements at screen center:", document.elementsFromPoint(window.innerWidth/2, window.innerHeight/2));
+console.log("Add toggle: document.addEventListener('keydown', e => e.key==='F12' && document.body.classList.toggle('debug-touch'))");
+*/
+
+

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const menuItems = [
   { id: 'home', label: 'Home' },
@@ -75,40 +75,42 @@ export default function Navbar({ activeSection }) {
       </div>
 
       {/* Mobile Menu */}
-      <motion.div 
-        initial={false}
-        animate={{ opacity: isOpen ? 1 : 0, scaleY: isOpen ? 1 : 0.95 }}
-        exit={{ opacity: 0, scaleY: 0.95 }}
-        className="md:hidden fixed inset-0 z-40 flex flex-col bg-glass/95 backdrop-blur-2xl pt-20"
-        style={{ top: 'var(--nav-height, 80px)' }}
-      >
-        {/* Backdrop overlay */}
-        <div 
-          className="absolute inset-0 -z-10"
-          onClick={() => setIsOpen(false)}
-        />
-        <ul className="flex-1 flex flex-col items-center justify-center space-y-4 px-6 py-8 text-lg">
-          {menuItems.map((item, index) => (
-            <motion.li 
-              key={item.id}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
-            >
-              <a 
-                href={`#${item.id}`}
-                className={`block py-3 px-6 text-soft-white/90 hover:text-accent-orange hover:bg-white/10 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 ${
-                  activeSection === item.id ? 'text-accent-orange bg-gradient-to-r from-accent-orange/20 font-bold shadow-orange-500/25' : ''
-                }`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </a>
-            </motion.li>
-          ))}
-        </ul>
-      </motion.div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, scaleY: 0.95 }}
+            animate={{ opacity: 1, scaleY: 1 }}
+            exit={{ opacity: 0, scaleY: 0.95 }}
+            className="md:hidden fixed inset-x-0 top-[72px] bottom-0 z-40 flex flex-col bg-glass/95 backdrop-blur-2xl pt-20"
+          >
+            {/* Backdrop overlay */}
+            <div 
+              className="absolute inset-0 -z-10"
+              onClick={() => setIsOpen(false)}
+            />
+            <ul className="flex-1 flex flex-col items-center justify-center space-y-4 px-6 py-8 text-lg">
+              {menuItems.map((item, index) => (
+                <motion.li 
+                  key={item.id}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <a 
+                    href={`#${item.id}`}
+                    className={`block py-3 px-6 text-soft-white/90 hover:text-accent-orange hover:bg-white/10 font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-1 ${
+                      activeSection === item.id ? 'text-accent-orange bg-gradient-to-r from-accent-orange/20 font-bold shadow-orange-500/25' : ''
+                    }`}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                </motion.li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   )
 }
-
