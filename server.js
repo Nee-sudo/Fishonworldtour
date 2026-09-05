@@ -8,12 +8,19 @@ const cors = require("cors");
 
 const distPath = path.join(__dirname, "fish-journey", "dist");
 const publicPath = path.join(__dirname, "fish-journey", "public");
+const distIndex = path.join(distPath, "index.html");
 
-// Serve the built frontend when available, otherwise use the Vite public folder.
+// Serve the production build when available. Avoid serving the Vite source index in deployment.
 if (fs.existsSync(distPath)) {
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, { index: false }));
+    app.get(/^(?!\/api).*/, (req, res, next) => {
+        if (req.path.includes(".")) {
+            return next();
+        }
+        return res.sendFile(distIndex);
+    });
 }
-app.use(express.static(publicPath));
+app.use(express.static(publicPath, { index: false }));
 
 // Middleware to parse the request body
 app.use(express.urlencoded({ extended: true }));
