@@ -13,16 +13,16 @@ L.Icon.Default.mergeOptions({
 })
 
 // Sample data with flags (replace with backend)
-const travelData = {
-  origin: { name: "Lucknow", lat: 26.8467, lng: 80.9462, country: "India", flag: "https://flagcdn.com/w20/in.png" },
-  destinations: [
-    { name: "New York", country: "USA", lat: 40.7128, lng: -74.0060, flag: "https://flagcdn.com/w20/us.png" },
-    { name: "London", country: "UK", lat: 51.5074, lng: -0.1278, flag: "https://flagcdn.com/w20/gb.png" },
-    { name: "Tokyo", country: "Japan", lat: 35.6762, lng: 139.6503, flag: "https://flagcdn.com/w20/jp.png" },
-    { name: "Sydney", country: "Australia", lat: -33.8688, lng: 151.2093, flag: "https://flagcdn.com/w20/au.png" },
-    { name: "Paris", country: "France", lat: 48.8566, lng: 2.3522, flag: "https://flagcdn.com/w20/fr.png" }
-  ]
-}
+// const travelData = {
+//   origin: { name: "Lucknow", lat: 26.8467, lng: 80.9462, country: "India", flag: "https://flagcdn.com/w20/in.png" },
+//   destinations: [
+//     { name: "New York", country: "USA", lat: 40.7128, lng: -74.0060, flag: "https://flagcdn.com/w20/us.png" },
+//     { name: "London", country: "UK", lat: 51.5074, lng: -0.1278, flag: "https://flagcdn.com/w20/gb.png" },
+//     { name: "Tokyo", country: "Japan", lat: 35.6762, lng: 139.6503, flag: "https://flagcdn.com/w20/jp.png" },
+//     { name: "Sydney", country: "Australia", lat: -33.8688, lng: 151.2093, flag: "https://flagcdn.com/w20/au.png" },
+//     { name: "Paris", country: "France", lat: 48.8566, lng: 2.3522, flag: "https://flagcdn.com/w20/fr.png" }
+//   ]
+// }
 
 export default function FlagMap() {
   const allLocations = [travelData.origin, ...travelData.destinations]
@@ -59,7 +59,7 @@ export default function FlagMap() {
         </p>
       </div>
       
-      <div className="h-[400px] md:h-[600px] rounded-2xl overflow-hidden">
+      <div className="h-[350px] lg:h-[450px] rounded-2xl overflow-hidden">
         <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%' }} scrollWheelZoom>
           <TileLayer
             attribution='&copy; OpenStreetMap'

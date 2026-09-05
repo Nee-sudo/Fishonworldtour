@@ -1,15 +1,15 @@
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Timer from './components/Timer'
-import FancyFlagMap from './components/FancyFlagMap'
-import MapComponent from './components/Map'
-import Leaderboard from './components/Leaderboard'
-import Encouragement from './components/Encouragement'
-import Goals from './components/Goals'
-import Dream from './components/Dream'
-import About from './components/About'
+
+const FancyFlagMap = lazy(() => import('./components/FancyFlagMap'))
+const Leaderboard = lazy(() => import('./components/Leaderboard'))
+const Encouragement = lazy(() => import('./components/Encouragement'))
+const Goals = lazy(() => import('./components/Goals'))
+const Dream = lazy(() => import('./components/Dream'))
+const About = lazy(() => import('./components/About'))
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
@@ -30,10 +30,7 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden">
-      {/* Bubbles background */}
-      <Bubbles />
-      
+    <div className="min-h-[100dvh] relative overflow-x-hidden touch-scroll">
       <Navbar activeSection={activeSection} />
       
       <main>
@@ -46,35 +43,27 @@ function App() {
             transition={{ duration: 0.8 }}
             className="container mx-auto px-6"
           >
-            <FancyFlagMap />
+            <Suspense fallback={<div className="flex items-center justify-center h-64 p-8"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div><p className="mt-4 text-lg text-gray-400">Loading world map...</p></div>}>
+              <FancyFlagMap />
+            </Suspense>
           </motion.div>
         </section>
-        <Leaderboard id="leaderboard" />
-        <Encouragement id="encourage" />
-        <Goals id="goals" />
-        <Dream id="dream" />
-        <About id="about" />
+        <Suspense fallback={<div className="py-20 flex flex-col items-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400 mb-4"></div><p className="text-xl text-gray-500">Loading leaderboard...</p></div>}>
+          <Leaderboard id="leaderboard" />
+        </Suspense>
+        <Suspense fallback={<div className="py-16 text-center"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-teal-400 mx-auto mb-3"></div><p className="text-gray-500">Loading encouragement...</p></div>}>
+          <Encouragement id="encourage" />
+        </Suspense>
+        <Suspense fallback={<div className="py-16 text-center"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-purple-400 mx-auto mb-3"></div><p className="text-gray-500">Loading goals...</p></div>}>
+          <Goals id="goals" />
+        </Suspense>
+        <Suspense fallback={<div className="py-16 text-center"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-400 mx-auto mb-3"></div><p className="text-gray-500">Loading dream...</p></div>}>
+          <Dream id="dream" />
+        </Suspense>
+        <Suspense fallback={<div className="py-16 text-center"><div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-400 mx-auto mb-3"></div><p className="text-gray-500">Loading about...</p></div>}>
+          <About id="about" />
+        </Suspense>
       </main>
-    </div>
-  )
-}
-
-const Bubbles = () => {
-  return (
-    <div className="bubbles">
-      {Array.from({ length: 20 }).map((_, i) => (
-        <div 
-          key={i}
-          className="bubble"
-          style={{
-            left: `${Math.random() * 100}%`,
-            width: `${Math.random() * 60 + 20}px`,
-            height: '20px',
-            animationDelay: `${Math.random() * 6}s`,
-            animationDuration: `${Math.random() * 3 + 4}s`
-          }}
-        />
-      ))}
     </div>
   )
 }

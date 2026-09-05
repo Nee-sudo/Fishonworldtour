@@ -2,6 +2,46 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Mobile Touch Fixes - Global optimizations */
+@layer utilities {
+  @media (hover: none) and (pointer: coarse) {
+    html, body, #root {
+      height: auto !important;
+      min-height: 100dvh !important;
+      overflow-x: hidden !important;
+      overflow-y: auto !important;
+      touch-action: manipulation !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior: none !important;
+    }
+    
+    * {
+      pointer-events: auto !important;
+    }
+    
+    /* Map specific touch handling */
+    .leaflet-container,
+    [class*="MapContainer"],
+    div[style*="height: '100%'"] {
+      touch-action: pan-x pan-y pinch-zoom !important;
+      overflow: visible !important;
+    }
+    
+    /* Navbar fixed */
+    nav {
+      touch-action: manipulation !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important; /* lighter */
+    }
+  }
+  
+  /* Global scroll smooth + touch */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+    touch-action: pan-y !important;
+  }
+}
+
 @layer components {
   .glass {
     @apply bg-white/5 backdrop-blur-xl border border-white/20;

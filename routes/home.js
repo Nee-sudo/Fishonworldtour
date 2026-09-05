@@ -1,7 +1,24 @@
 const express = require("express");
+const path = require("path");
+const fs = require("fs");
 const router = express.Router();
 const Comment = require("../models/commentModel");
 const { countries } = require("countries-list");
+
+const sendFrontend = (res) => {
+    const distIndex = path.join(__dirname, "..", "fish-journey", "dist", "index.html");
+    const publicIndex = path.join(__dirname, "..", "fish-journey", "index.html");
+
+    if (fs.existsSync(distIndex)) {
+        return res.sendFile(distIndex);
+    }
+
+    if (fs.existsSync(publicIndex)) {
+        return res.sendFile(publicIndex);
+    }
+
+    return res.status(200).send("Fish on World Tour");
+};
 
 router.get("/", async (req, res) => {
     try {
@@ -10,10 +27,16 @@ router.get("/", async (req, res) => {
             name: country.name,
             code: country.code
         })).sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
-        res.render("index", { comments, countryList });
+
+        // Preserve the legacy data for future use without depending on an EJS template folder.
+        if (comments && countryList) {
+            return sendFrontend(res);
+        }
+
+        return sendFrontend(res);
     } catch (error) {
         console.error("Error fetching comments:", error);
-        res.render("index", { comments: [], countryList: [] });
+        return sendFrontend(res);
     }
 });
 

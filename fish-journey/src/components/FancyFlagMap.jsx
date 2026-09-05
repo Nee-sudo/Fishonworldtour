@@ -34,7 +34,7 @@ export default function FancyFlagMap() {
         // Safe data handling - filter valid locations and add fallback flagUrl
         const validLocations = Array.isArray(data) ? data.map(loc => ({
           ...loc,
-          flagUrl: loc.flagUrl || loc.flag || `https://flagcdn.com/w320/${(loc.actualCountry || 'un').toLowerCase()}.png`,
+flagUrl: loc.flagUrl || loc.flag || `https://flagcdn.com/w80/${(loc.actualCountry || 'un').toLowerCase()}.png`,
           name: loc.actualCity || loc.name || 'Location',
           country: loc.actualCountry || loc.country || 'Unknown',
           countryCode: normalizeCountryName(loc.actualCountry || loc.country),
@@ -78,8 +78,8 @@ export default function FancyFlagMap() {
   if (loading) return <div className="text-center p-20 text-xl font-semibold text-gray-600">Loading your journey map...</div>
 
   return (
-    <motion.div 
-      className="glass rounded-3xl p-6 max-w-6xl mx-auto shadow-2xl relative overflow-hidden"
+    <motion.div
+      className="glass rounded-3xl p-6 max-w-6xl mx-auto shadow-2xl relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
@@ -94,13 +94,12 @@ export default function FancyFlagMap() {
         @keyframes dashMove { from { stroke-dashoffset: 10; } to { stroke-dashoffset: 0; } }
       `}</style>
 
-      <div className="h-[600px] rounded-3xl overflow-hidden shadow-inner border border-white/20">
+      <div className="h-[350px] lg:h-[450px] rounded-3xl shadow-inner border border-white/20 leaflet-map-touch overflow-hidden">
         <MapContainer center={[20, 0]} zoom={2.5} style={{ height: '100%', width: '100%' }}>
           <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" />
 
-          {/* NEW: Country GeoJSON layer - actual colors */}
-          <GeoJSON 
-            data={null} 
+          <GeoJSON
+            data={null}
             url="https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson"
             eventHandlers={{
               add: (e) => {
@@ -109,7 +108,7 @@ export default function FancyFlagMap() {
                 if (!layer) return;
                 const feature = layer.feature || e.target?.feature || e.propagatedFrom?.feature;
                 if (!feature?.properties) return;
-                
+
                 const props = feature.properties;
                 const code = (props.ISO_A2 || props.ISO_A3?.slice(0,2) || 'un').toLowerCase();
                 layer.options.fillColor = getCountryColor(code);
@@ -118,7 +117,7 @@ export default function FancyFlagMap() {
                 layer.options.weight = 0.5;
                 layer.options.className = 'country-fill';
                 layer.bindPopup(`<b>${props.NAME || props.NAME_LONG || 'Country'}</b><br>ISO: ${code.toUpperCase()}`);
-                // Mark visited countries
+
                 if (locations.some(loc => normalizeCountryName(loc.country)?.toLowerCase() === code)) {
                   layer.options.className += ' country-visited';
                 }
@@ -126,7 +125,6 @@ export default function FancyFlagMap() {
             }}
           />
 
-          {/* Lines from origin to destinations */}
           {origin && locations.filter(l => l !== origin).map((loc, idx) => (
             <Polyline
               key={`path-${idx}`}
@@ -136,9 +134,8 @@ export default function FancyFlagMap() {
             />
           ))}
 
-          {/* Markers */}
           {locations.map((loc, index) => (
-            <Marker 
+            <Marker
               key={`loc-${index}`}
               position={[loc.lat, loc.lng]}
               icon={createFlagIcon(loc)}
@@ -149,7 +146,7 @@ export default function FancyFlagMap() {
             >
               <Popup>
                 <div className="text-center font-bold p-2">
-                  {loc.name}<br/>
+                  {loc.name}<br />
                   <span className="text-gray-500 font-normal">{loc.country} ({loc.countryCode?.toUpperCase()})</span>
                 </div>
               </Popup>
@@ -164,7 +161,7 @@ export default function FancyFlagMap() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-md px-6 py-2 rounded-full shadow-lg z-[1000] border border-blue-100"
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 rounded-full bg-white/90 px-4 py-2 text-sm font-medium text-slate-800 shadow-lg border border-blue-100"
           >
             <span className="text-blue-600 font-bold">Visiting:</span> {hovered}
           </motion.div>

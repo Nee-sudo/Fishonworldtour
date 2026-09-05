@@ -49,7 +49,7 @@ export default function MapComponent() {
         </p>
       </motion.div>
 
-      <div className="h-[400px] md:h-[600px] rounded-2xl overflow-hidden">
+      <div className="h-[350px] lg:h-[450px] rounded-2xl overflow-hidden">
         <MapContainer center={[20, 0]} zoom={2} style={{ height: '100%', width: '100%' }} scrollWheelZoom={true}>
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

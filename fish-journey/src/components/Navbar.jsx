@@ -24,7 +24,7 @@ export default function Navbar({ activeSection }) {
     <motion.nav 
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-lg ${scrolled ? 'glass backdrop-blur-xl shadow-xl/50' : 'glass shadow-md/50'}`}
+className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 shadow-lg ${scrolled ? 'glass backdrop-blur-md shadow-xl/50' : 'glass shadow-md/50'}`}
     >
       <div className="container mx-auto px-6 py-4 flex items-center justify-between">
         <motion.div 

@@ -1,14 +1,1 @@
-# Fix Vite Duplicate Import Errors - Progress Tracker
-
-## Steps:
-- [x] Step 1: Edit `src/components/FancyFlagMap.jsx` - Remove duplicate imports (lines 8-10) ✅
-- [x] Step 2: Test by running `npm run dev` - Vite builds successfully, runs on http://localhost:5174/ ✅
-- [x] Step 3: Fix GeoJSON runtime error with safe feature checks ✅
-- [x] Mark complete once map renders without console errors
-
-**Status: All done! Vite builds clean, map should render without crashes. Refresh http://localhost:5174/.**
-
-Check TODO.md for progress.
-
-
-
+## Plan Steps (Completed ✅)\n\nMap height reduced to compact box:\n- Base: 350px (mobile/tablet)\n- lg+: 450px (desktop)\n\nCSS responsive clamps adjusted (max 450px).\n\nTask complete. Run `cd fish-journey && npm run dev` to test.

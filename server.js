@@ -1,21 +1,24 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const fs = require("fs");
 const mongoose = require("mongoose");
 require("dotenv").config();
 const cors = require("cors");
 
-// Middleware to serve static files from the public folder
-app.use(express.static(path.join(__dirname, "fish-journey/public")));
+const distPath = path.join(__dirname, "fish-journey", "dist");
+const publicPath = path.join(__dirname, "fish-journey", "public");
 
-// Set view engine to EJS
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+// Serve the built frontend when available, otherwise use the Vite public folder.
+if (fs.existsSync(distPath)) {
+    app.use(express.static(distPath));
+}
+app.use(express.static(publicPath));
 
 // Middleware to parse the request body
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-    origin: ["http://localhost:3000", "http://localhost:5173", "http://127.0.0.1:5173", "https://fishonworldtour.up.railway.app","http://127.0.0.1:3000","https://fishonworldtour.netlify.app","https://fishonworldtour.vercel.app","https://fishonworldtour.onrender.com" , "https://fishonworldtour-m6td.vercel.app"], // Added Vite port 5173
+    origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:4173", "http://127.0.0.1:5173", "https://fishonworldtour.up.railway.app","http://127.0.0.1:3000","https://fishonworldtour.netlify.app","https://fishonworldtour.vercel.app","https://fishonworldtour.onrender.com" , "https://fishonworldtour-m6td.vercel.app"], // Added Vite preview port 4173
     methods: ["GET", "POST"],
     credentials: true
 }));
@@ -45,4 +48,8 @@ app.use("/api", trackRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
+
+module.exports = app;
