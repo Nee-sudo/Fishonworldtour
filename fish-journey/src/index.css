@@ -2,29 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    min-height: 100%;
+    overflow-x: clip;
+  }
+
+  body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+
+  #root {
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
 /* Mobile Touch Fixes - Global optimizations */
 @layer utilities {
   @media (hover: none) and (pointer: coarse) {
-    html, body, #root {
+    html, body {
+      height: auto !important;
+      overflow-y: auto !important;
+      touch-action: pan-y pinch-zoom !important;
+      -webkit-overflow-scrolling: touch !important;
+      overscroll-behavior-y: auto !important;
+    }
+
+    #root {
       height: auto !important;
       min-height: 100dvh !important;
-      overflow-x: hidden !important;
-      overflow-y: auto !important;
-      touch-action: manipulation !important;
-      -webkit-overflow-scrolling: touch !important;
-      overscroll-behavior: none !important;
-    }
-    
-    * {
-      pointer-events: auto !important;
     }
     
     /* Map specific touch handling */
-    .leaflet-container,
-    [class*="MapContainer"],
-    div[style*="height: '100%'"] {
+    .journey-map .maplibregl-canvas-container {
       touch-action: pan-x pan-y pinch-zoom !important;
-      overflow: visible !important;
     }
     
     /* Navbar fixed */
@@ -122,4 +136,3 @@
 .scroll-smooth {
   scroll-behavior: smooth;
 }
-

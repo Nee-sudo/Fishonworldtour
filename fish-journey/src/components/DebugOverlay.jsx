@@ -35,11 +35,11 @@ export default function DebugOverlay() {
             background: rgba(255, 165, 0, 0.2) !important;
           }
 
-          button, input, textarea, [class*="leaflet"], a { 
+          button, input, textarea, [class*="maplibre"], a {
             outline: 3px solid orange !important;
             background: rgba(255, 165, 0, 0.4) !important;
           }
-          .leaflet-container { 
+          .maplibregl-map {
             outline: 5px solid red !important;
             background: rgba(255, 0, 0, 0.3) !important;
           }

@@ -3,6 +3,7 @@ const app = express();
 const path = require("path");
 const fs = require("fs");
 const mongoose = require("mongoose");
+const dns = require("dns");
 require("dotenv").config();
 const cors = require("cors");
 
@@ -34,6 +35,14 @@ app.use(cors({
 app.use(express.json());
 
 // Connect to MongoDB
+const mongoDnsServers = process.env.MONGO_DNS_SERVERS
+    ?.split(",")
+    .map(server => server.trim())
+    .filter(Boolean);
+if (mongoDnsServers?.length) {
+    dns.setServers(mongoDnsServers);
+}
+
 const mongoDBUrl = process.env.MONGO_DB_URL || "mongodb://localhost:27017/fishTracker";
 mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log("Connected to MongoDB"))

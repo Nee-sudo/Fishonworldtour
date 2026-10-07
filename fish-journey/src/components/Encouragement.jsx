@@ -17,7 +17,7 @@ export default function Encouragement({ id }) {
       const response = await fetch(`${BACKEND_URL}/api/comments`)
       if (response.ok) {
         const data = await response.json()
-        setComments(data.slice(0, 10)) // Show recent 10
+        setComments(data)
       }
     } catch (error) {
       console.error('Comments error:', error)
@@ -94,7 +94,7 @@ export default function Encouragement({ id }) {
 
         {/* Recent Comments */}
         <motion.div 
-          className="glass rounded-2xl p-8 space-y-4 max-h-96 overflow-y-auto"
+          className="glass rounded-2xl p-8 space-y-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
         >
@@ -102,16 +102,24 @@ export default function Encouragement({ id }) {
           {comments.length > 0 ? (
             comments.map((comment, index) => (
               <motion.div 
-                key={index}
+                key={comment._id ?? comment.id ?? index}
                 className="flex gap-3 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-all"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                {comment.flagUrl && (
-                  <img src={comment.flagUrl} alt={comment.country} className="w-8 h-6 rounded flex-shrink-0 mt-1" />
-                )}
+                {comment.flagUrl ? (
+                  <img
+                    src={comment.flagUrl}
+                    alt={comment.country || 'Country flag'}
+                    className="w-8 h-6 rounded flex-shrink-0 mt-1"
+                  />
+                ) : comment.authorFlag ? (
+                  <span className="text-2xl flex-shrink-0 mt-1" role="img" aria-label="Country flag">
+                    {comment.authorFlag}
+                  </span>
+                ) : null}
                 <div>
-                  <p className="font-medium">{comment.text}</p>
+                  <p className="font-medium">{comment.text ?? comment.content}</p>
                   <small className="text-muted-gray">{new Date(comment.timestamp).toLocaleString()}</small>
                 </div>
               </motion.div>
@@ -124,4 +132,3 @@ export default function Encouragement({ id }) {
     </section>
   )
 }
-

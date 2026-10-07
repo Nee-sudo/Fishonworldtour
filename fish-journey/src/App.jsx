@@ -30,18 +30,18 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-[100dvh] relative overflow-x-hidden touch-scroll">
+    <div className="min-h-[100dvh] relative overflow-x-clip">
       <Navbar activeSection={activeSection} />
       
       <main>
         <Hero id="home" />
         <Timer id="timer" />
-        <section id="map" className="py-24">
+        <section id="map" className="py-12 md:py-24">
           <motion.div 
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="container mx-auto px-6"
+            className="w-full px-0 sm:px-4 lg:px-6"
           >
             <Suspense fallback={<div className="flex items-center justify-center h-64 p-8"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div><p className="mt-4 text-lg text-gray-400">Loading world map...</p></div>}>
               <FancyFlagMap />
@@ -69,4 +69,3 @@ function App() {
 }
 
 export default App
-
