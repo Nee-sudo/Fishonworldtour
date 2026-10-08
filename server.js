@@ -11,6 +11,10 @@ const distPath = path.join(__dirname, "fish-journey", "dist");
 const publicPath = path.join(__dirname, "fish-journey", "public");
 const distIndex = path.join(distPath, "index.html");
 
+app.get("/healthz", (req, res) => {
+    res.status(200).json({ status: "ok" });
+});
+
 // Serve the production build when available. Avoid serving the Vite source index in deployment.
 if (fs.existsSync(distPath)) {
     app.use(express.static(distPath, { index: false }));
@@ -44,7 +48,10 @@ if (mongoDnsServers?.length) {
 }
 
 const mongoDBUrl = process.env.MONGO_DB_URL || "mongodb://localhost:27017/fishTracker";
-mongoose.connect(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+if (process.env.NODE_ENV === "production" && !process.env.MONGO_DB_URL) {
+    throw new Error("MONGO_DB_URL must be set in production.");
+}
+mongoose.connect(mongoDBUrl)
     .then(() => console.log("Connected to MongoDB"))
     .catch(err => console.error("Failed to connect to MongoDB", err));
 

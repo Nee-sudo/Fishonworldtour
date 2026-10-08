@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-
-const BACKEND_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://fishonworldtour.onrender.com'
+import API_BASE_URL from '../utils/api.js'
 
 export default function Encouragement({ id }) {
   const [message, setMessage] = useState('')
@@ -14,7 +13,7 @@ export default function Encouragement({ id }) {
 
   const loadComments = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL}/api/comments`)
+      const response = await fetch(`${API_BASE_URL}/api/comments`)
       if (response.ok) {
         const data = await response.json()
         setComments(data)
@@ -31,7 +30,7 @@ export default function Encouragement({ id }) {
         const ipResponse = await fetch("https://api.ipify.org?format=json")
         const ipData = await ipResponse.json()
         
-        const response = await fetch(`${BACKEND_URL}/api/comment`, {
+        const response = await fetch(`${API_BASE_URL}/api/comment`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: message, ipAddress: ipData.ip })

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-
-const BACKEND_URL = window.location.hostname === 'localhost' ? 'http://localhost:3000' : 'https://fishonworldtour.onrender.com'
+import API_BASE_URL from '../utils/api.js'
 
 export default function Leaderboard({ id }) {
   const [leaderboard, setLeaderboard] = useState([])
@@ -9,7 +8,7 @@ export default function Leaderboard({ id }) {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/leaderboard`)
+        const response = await fetch(`${API_BASE_URL}/api/leaderboard`)
         if (response.ok) {
           const data = await response.json()
           setLeaderboard(data)

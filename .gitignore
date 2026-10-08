@@ -6,6 +6,8 @@ node_modules/
 
 # Ignore environment files
 .env
+.env.*
+!.env.example
 
 # Ignore build directories
 dist/

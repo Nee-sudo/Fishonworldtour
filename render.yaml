@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: fishonworldtour
+    runtime: node
+    plan: free
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_DB_URL
+        sync: false
+      - key: IPINFO_TOKEN
+        sync: false

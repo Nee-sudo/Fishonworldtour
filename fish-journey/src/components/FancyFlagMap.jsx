@@ -6,10 +6,8 @@ import './FancyFlagMap.css'
 import { motion, AnimatePresence } from 'framer-motion'
 import { normalizeCountryName } from '../utils/countryCodes.js'
 import { getCountryColor } from '../utils/countryColors.js'
+import API_BASE_URL from '../utils/api.js'
 
-const BACKEND_URL = window.location.hostname === 'localhost'
-  ? 'http://localhost:3000'
-  : 'https://fishonworldtour.onrender.com'
 const COUNTRIES_URL = 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson'
 const MAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/liberty'
 maplibregl.setWorkerUrl(maplibreWorkerUrl)
@@ -120,7 +118,7 @@ export default function FancyFlagMap() {
 
     async function fetchData() {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/locations`)
+        const response = await fetch(`${API_BASE_URL}/api/locations`)
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`)
         }

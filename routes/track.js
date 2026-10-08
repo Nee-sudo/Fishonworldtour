@@ -4,8 +4,7 @@ const Location = require("../models/locationModel");
 const Comment = require("../models/commentModel");
 const router = express.Router();
 
-// ipinfo.io API token (replace with your own token)
-const IPINFO_TOKEN = "032783179f989d"; // Ensure this is valid; sign up at ipinfo.io for a free token
+const IPINFO_TOKEN = process.env.IPINFO_TOKEN;
 
 // Track User Location with IP
 router.post("/track", async (req, res) => {

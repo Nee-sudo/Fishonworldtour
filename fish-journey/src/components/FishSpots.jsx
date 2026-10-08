@@ -1,9 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
-
-const BACKEND_URL = ['localhost', '127.0.0.1'].includes(window.location.hostname)
-  ? 'http://localhost:3000'
-  : 'https://fishonworldtour.onrender.com'
+import API_BASE_URL from '../utils/api.js'
 const MAX_IMAGE_BYTES = 2 * 1024 * 1024
 const MAX_SOURCE_BYTES = 12 * 1024 * 1024
 
@@ -84,7 +81,7 @@ export default function FishSpots({ id }) {
       setIsLoading(true)
       setGalleryError('')
       try {
-        const response = await fetch(`${BACKEND_URL}/api/fish-spots`, { signal: controller.signal })
+        const response = await fetch(`${API_BASE_URL}/api/fish-spots`, { signal: controller.signal })
         if (!response.ok) throw new Error('The sightings gallery could not be loaded right now.')
         setSpots(await response.json())
       } catch (error) {
@@ -153,7 +150,7 @@ export default function FishSpots({ id }) {
     }
 
     try {
-      const response = await fetch(`${BACKEND_URL}/api/fish-spots`, {
+      const response = await fetch(`${API_BASE_URL}/api/fish-spots`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(submission)
