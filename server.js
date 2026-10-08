@@ -23,7 +23,7 @@ if (fs.existsSync(distPath)) {
 }
 app.use(express.static(publicPath, { index: false }));
 
-// Middleware to parse the request body
+// Middleware to parse the request body, including compressed fish-spot photos.
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: ["http://localhost:3000", "http://localhost:5173", "http://localhost:4173", "http://127.0.0.1:5173", "https://fishonworldtour.up.railway.app","http://127.0.0.1:3000","https://fishonworldtour.netlify.app","https://fishonworldtour.vercel.app","https://fishonworldtour.onrender.com" , "https://fishonworldtour-m6td.vercel.app"], // Added Vite preview port 4173
@@ -31,8 +31,8 @@ app.use(cors({
     credentials: true
 }));
 
-// Middleware to parse JSON bodies
-app.use(express.json());
+// Allow bounded, client-resized image data in fish-spot submissions.
+app.use(express.json({ limit: "3mb" }));
 
 // Connect to MongoDB
 const mongoDnsServers = process.env.MONGO_DNS_SERVERS
@@ -54,6 +54,7 @@ const goalRoute = require("./routes/goal");
 const dreamRoute = require("./routes/dream");
 const aboutRoute = require("./routes/about");
 const trackRoutes = require("./routes/track");
+const fishSpotsRoute = require("./routes/fishSpots");
 
 // Use routes
 app.use("/", homeRoute);
@@ -61,6 +62,7 @@ app.use("/goal", goalRoute);
 app.use("/dream", dreamRoute);
 app.use("/about", aboutRoute);
 app.use("/api", trackRoutes);
+app.use("/api/fish-spots", fishSpotsRoute);
 
 const PORT = process.env.PORT || 3000;
 

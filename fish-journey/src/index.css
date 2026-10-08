@@ -3,6 +3,26 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --deep-navy: 3 7 24;
+    --teal-blue: 15 38 80;
+    --soft-white: 248 250 252;
+    --muted-gray: 148 163 184;
+    --accent-orange: 59 130 246;
+    --cyan-blue: 56 189 248;
+    color-scheme: dark;
+  }
+
+  :root.theme-light {
+    --deep-navy: 239 248 250;
+    --teal-blue: 214 235 240;
+    --soft-white: 18 48 59;
+    --muted-gray: 69 96 106;
+    --accent-orange: 249 115 22;
+    --cyan-blue: 6 182 212;
+    color-scheme: light;
+  }
+
   html {
     min-height: 100%;
     overflow-x: clip;
@@ -59,6 +79,18 @@
 @layer components {
   .glass {
     @apply bg-white/5 backdrop-blur-xl border border-white/20;
+  }
+
+  .theme-light .glass {
+    @apply bg-white/70 border-slate-900/10;
+  }
+
+  .theme-light .leaderboard-visits {
+    color: #854d0e;
+  }
+
+  .dark .btn-orange {
+    @apply text-white hover:shadow-blue-500/50;
   }
   
   .shadow-lg {

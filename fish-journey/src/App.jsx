@@ -10,13 +10,14 @@ const Encouragement = lazy(() => import('./components/Encouragement'))
 const Goals = lazy(() => import('./components/Goals'))
 const Dream = lazy(() => import('./components/Dream'))
 const About = lazy(() => import('./components/About'))
+const FishSpots = lazy(() => import('./components/FishSpots'))
 
 function App() {
   const [activeSection, setActiveSection] = useState('home')
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'timer', 'map', 'leaderboard', 'encourage', 'goals', 'dream', 'about']
+      const sections = ['home', 'timer', 'map', 'spotted', 'leaderboard', 'encourage', 'goals', 'dream', 'about']
       for (let section of sections.reverse()) {
         const el = document.getElementById(section)
         if (el && el.getBoundingClientRect().top < 100) {
@@ -48,6 +49,9 @@ function App() {
             </Suspense>
           </motion.div>
         </section>
+        <Suspense fallback={<div className="py-16 text-center text-muted-gray">Loading the fish sightings...</div>}>
+          <FishSpots id="spotted" />
+        </Suspense>
         <Suspense fallback={<div className="py-20 flex flex-col items-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-400 mb-4"></div><p className="text-xl text-gray-500">Loading leaderboard...</p></div>}>
           <Leaderboard id="leaderboard" />
         </Suspense>

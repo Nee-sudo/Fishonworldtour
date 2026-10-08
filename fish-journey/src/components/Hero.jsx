@@ -77,7 +77,7 @@ export default function Hero({ id }) {
           I Want to See
           <br />
           <span className="inline-block">
-            <span className="bg-gradient-to-r from-accent-orange to-yellow-400 bg-clip-text text-transparent">the World</span>
+            <span className="bg-gradient-to-r from-accent-orange to-cyan-blue bg-clip-text text-transparent">the World</span>
             <span className="text-soft-white ml-1">🥺</span>
           </span>
         </motion.h1>
@@ -100,6 +100,14 @@ export default function Hero({ id }) {
             whileTap={{ scale: 0.98 }}
           >
             Start the Journey ↓
+          </motion.a>
+          <motion.a
+            href="#spotted"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-cyan-blue/50 bg-cyan-blue/10 px-7 py-4 text-lg font-bold text-soft-white shadow-lg backdrop-blur transition-colors hover:bg-cyan-blue/20 focus:outline-none focus:ring-2 focus:ring-cyan-blue"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            I found this fish! 🐟
           </motion.a>
           <motion.button
             type="button"

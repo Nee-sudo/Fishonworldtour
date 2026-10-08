@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="theme-light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/images/fish-logo.png" />
@@ -12,10 +12,19 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" /></noscript>
     <style>
-      *{box-sizing:border-box;margin:0;padding:0}html{font-family:Inter,sans-serif;line-height:1.6}body{min-height:100vh;overflow-x:hidden}#root{min-height:100vh}.dark{color-scheme:dark}.bg-gradient-to-b{background:linear-gradient(to bottom,var(--deep-navy, #0a0e1a),var(--teal-blue, #0f4c5c))}.text-soft-white{color:#f0f8ff}
+      *{box-sizing:border-box;margin:0;padding:0}html{font-family:Inter,sans-serif;line-height:1.6}body{min-height:100vh;overflow-x:hidden}#root{min-height:100vh}.bg-gradient-to-b{background:linear-gradient(to bottom,rgb(var(--deep-navy, 10 14 26)),rgb(var(--teal-blue, 15 76 92)))}
     </style>
+    <script>
+      try {
+        if (localStorage.getItem('fishJourneyTheme') === 'dark') {
+          document.documentElement.classList.replace('theme-light', 'dark')
+        }
+      } catch (error) {
+        console.warn('Theme preference could not be loaded.', error)
+      }
+    </script>
   </head>
-  <body class="dark bg-gradient-to-b from-deep-navy to-teal-blue text-soft-white">
+  <body class="bg-gradient-to-b from-deep-navy to-teal-blue text-soft-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -7,12 +7,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        'deep-navy': '#020617',
-        'teal-blue': '#0f3b4c',
-        'soft-white': '#e2e8f0',
-        'muted-gray': '#94a3b8',
-        'accent-orange': '#f97316',
-        'cyan-blue': '#06b6d4',
+        'deep-navy': 'rgb(var(--deep-navy) / <alpha-value>)',
+        'teal-blue': 'rgb(var(--teal-blue) / <alpha-value>)',
+        'soft-white': 'rgb(var(--soft-white) / <alpha-value>)',
+        'muted-gray': 'rgb(var(--muted-gray) / <alpha-value>)',
+        'accent-orange': 'rgb(var(--accent-orange) / <alpha-value>)',
+        'cyan-blue': 'rgb(var(--cyan-blue) / <alpha-value>)',
       },
       fontFamily: {
         'inter': ['Inter', 'sans-serif'],

@@ -5,14 +5,54 @@ const menuItems = [
   { id: 'home', label: 'Home' },
   { id: 'journey', label: 'Journey' },
   { id: 'map', label: 'Map' },
+  { id: 'spotted', label: 'Fish spotted?' },
   { id: 'goals', label: 'Goals' },
   { id: 'dream', label: 'Dream' },
   { id: 'about', label: 'About' }
 ]
 
+function ThemeToggle({ isLightTheme, onToggle }) {
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={`Switch to ${isLightTheme ? 'dark' : 'light'} theme`}
+      aria-pressed={isLightTheme}
+      title={`Switch to ${isLightTheme ? 'dark' : 'light'} theme`}
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-white/20 text-soft-white transition-colors hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-accent-orange"
+    >
+      {isLightTheme ? (
+        <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z" />
+        </svg>
+      ) : (
+        <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+          <circle cx="12" cy="12" r="4" />
+          <path strokeLinecap="round" d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" />
+        </svg>
+      )}
+    </button>
+  )
+}
+
 export default function Navbar({ activeSection }) {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isLightTheme, setIsLightTheme] = useState(() => (
+    document.documentElement.classList.contains('theme-light')
+  ))
+
+  useEffect(() => {
+    const root = document.documentElement
+    root.classList.toggle('theme-light', isLightTheme)
+    root.classList.toggle('dark', !isLightTheme)
+
+    try {
+      localStorage.setItem('fishJourneyTheme', isLightTheme ? 'light' : 'dark')
+    } catch (error) {
+      console.warn('Theme preference could not be saved.', error)
+    }
+  }, [isLightTheme])
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50)
@@ -53,25 +93,28 @@ className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 shadow-l
           ))}
         </ul>
 
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden p-2 text-soft-white hover:text-accent-orange rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent-orange"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? "Close menu" : "Open menu"}
-          aria-expanded={isOpen}
-        >
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            {isOpen ? (
-              <>
+        <div className="flex items-center gap-3">
+          <ThemeToggle
+            isLightTheme={isLightTheme}
+            onToggle={() => setIsLightTheme(theme => !theme)}
+          />
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 text-soft-white hover:text-accent-orange rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent-orange"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isOpen}
+          >
+            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {isOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </>
-            ) : (
-              <>
+              ) : (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </>
-            )}
-          </svg>
-        </button>
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

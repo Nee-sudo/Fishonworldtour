@@ -40,11 +40,11 @@ export default function Leaderboard({ id }) {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-white/20">
-                  <th className="py-4 px-6 font-bold uppercase tracking-wider text-white">Rank</th>
-                  <th className="py-4 px-6 font-bold uppercase tracking-wider text-white">Country</th>
-                  <th className="py-4 px-6 font-bold uppercase tracking-wider text-white">Flag</th>
-                  <th className="py-4 px-6 text-right font-bold uppercase tracking-wider text-white">Visits</th>
+                <tr className="border-b border-soft-white/20">
+                  <th className="py-4 px-6 font-bold uppercase tracking-wider text-soft-white">Rank</th>
+                  <th className="py-4 px-6 font-bold uppercase tracking-wider text-soft-white">Country</th>
+                  <th className="py-4 px-6 font-bold uppercase tracking-wider text-soft-white">Flag</th>
+                  <th className="py-4 px-6 text-right font-bold uppercase tracking-wider text-soft-white">Visits</th>
                 </tr>
               </thead>
               <tbody>
@@ -53,12 +53,12 @@ export default function Leaderboard({ id }) {
                     key={index}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    className="border-b border-white/10 hover:bg-white/10 transition-all"
+                    className="border-b border-soft-white/10 hover:bg-soft-white/5 transition-all"
                   >
-                    <td className="py-4 px-6 font-bold text-xl text-white">
+                    <td className="py-4 px-6 font-bold text-xl text-soft-white">
                       {index + 1}
                     </td>
-                    <td className="py-4 px-6 font-mono uppercase font-bold text-lg text-white">
+                    <td className="py-4 px-6 font-mono uppercase font-bold text-lg text-soft-white">
                       {entry.country}
                     </td>
                     <td className="py-4 px-6">
@@ -69,7 +69,7 @@ export default function Leaderboard({ id }) {
                         onError={(e) => { e.target.src = 'https://flagcdn.com/w40/xx.png' }}
                       />
                     </td>
-                    <td className="py-4 px-6 text-right font-bold text-2xl text-yellow-400">
+                    <td className="leaderboard-visits py-4 px-6 text-right font-bold text-2xl text-cyan-blue">
                       {entry.visits}
                     </td>
                   </motion.tr>
@@ -82,4 +82,3 @@ export default function Leaderboard({ id }) {
     </section>
   )
 }
-
